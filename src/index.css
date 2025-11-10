@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Poppins", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --color-brand-50: #f0f9ff;
+  --color-brand-100: #e0f2fe;
+  --color-brand-200: #b9e5fd;
+  --color-brand-300: #7fd0fb;
+  --color-brand-400: #38bdf8;
+  --color-brand-500: #0ea5e9;
+  --color-brand-600: #0284c7;
+  --color-brand-700: #0369a1;
+  --color-brand-800: #075985;
+  --color-brand-900: #0c4a6e;
+
+  --color-primary-300: #ff4d5a;
+  --color-primary-400: #f32c36;
+  --color-primary-500: #e50914;
+  --color-primary-600: #b0060f;
+  --color-primary-700: #7f040a;
+
+  --shadow-soft: 0 12px 30px -15px rgba(229, 9, 20, 0.35);
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply min-h-screen bg-slate-950 font-sans text-slate-100 antialiased;
+}
+
+#root {
+  @apply min-h-screen;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply outline-none ring-2 ring-offset-2 ring-offset-slate-950 ring-primary-400;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  @apply rounded-xl bg-slate-950 text-slate-100;
+  box-shadow: 0 0 0 1000px #020617 inset;
+  -webkit-text-fill-color: #e2e8f0;
+  caret-color: #e2e8f0;
+  transition: background-color 10000s ease 0s, color 10000s ease 0s;
+}
+

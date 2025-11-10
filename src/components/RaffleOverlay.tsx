@@ -1,0 +1,55 @@
+import type { Participant } from '../types.ts';
+
+type RaffleOverlayProps = {
+  winners: Participant[];
+  onClose: () => void;
+};
+
+export const RaffleOverlay = ({ winners, onClose }: RaffleOverlayProps) => {
+  if (winners.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 px-4 backdrop-blur">
+      <div className="w-full max-w-lg space-y-5 rounded-3xl border border-brand-500/40 bg-slate-900/95 p-6 shadow-2xl">
+        <header className="space-y-2 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-brand-200">Celebramos a</p>
+          <h2 className="text-3xl font-bold text-white">
+            🎉 ¡{winners.length} ganador{winners.length > 1 ? 'es' : ''} al instante!
+          </h2>
+          <p className="text-sm text-slate-400">
+            Mostralos en vivo, agradeceles y seguí sorprendiendo a tu comunidad.
+          </p>
+        </header>
+
+        <ul className="space-y-3">
+          {winners.map((winner, index) => (
+            <li
+              key={winner.id}
+              className="flex items-center justify-between rounded-2xl border border-brand-500/25 bg-slate-950/70 px-4 py-3"
+            >
+              <div>
+                <p className="text-sm font-semibold text-white">
+                  #{index + 1} {winner.name}
+                </p>
+                <p className="text-xs text-slate-400">{winner.contact}</p>
+              </div>
+              <span className="text-xs font-semibold text-brand-200">
+                {winner.chances} chance{winner.chances > 1 ? 's' : ''}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="w-full cursor-pointer rounded-xl bg-primary-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary-400 active:scale-[0.98]"
+        >
+          Continuar
+        </button>
+      </div>
+    </div>
+  );
+};
