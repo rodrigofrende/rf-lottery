@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import Confetti from 'react-confetti';
 import { ParticipantForm } from './components/ParticipantForm.tsx';
 import { ParticipantList } from './components/ParticipantList.tsx';
 import { RaffleControls } from './components/RaffleControls.tsx';
@@ -195,17 +194,12 @@ const App = () => {
 
       <main className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col gap-6 px-4 pb-16 pt-10 sm:px-6 lg:px-8">
         {isResultOverlayOpen ? (
-          <RaffleOverlay winners={winners} onClose={handleCloseOverlay} />
-        ) : null}
-
-        {showConfetti && width > 0 && height > 0 ? (
-          <Confetti
-            width={width}
-            height={height}
-            numberOfPieces={420}
-            recycle={false}
-            gravity={0.2}
-            style={{ pointerEvents: 'none' }}
+          <RaffleOverlay
+            winners={winners}
+            onClose={handleCloseOverlay}
+            showConfetti={showConfetti}
+            viewportWidth={width}
+            viewportHeight={height}
           />
         ) : null}
 

@@ -1,18 +1,43 @@
+import Confetti from 'react-confetti';
 import type { Participant } from '../types.ts';
 
 type RaffleOverlayProps = {
   winners: Participant[];
   onClose: () => void;
+  showConfetti: boolean;
+  viewportWidth: number;
+  viewportHeight: number;
 };
 
-export const RaffleOverlay = ({ winners, onClose }: RaffleOverlayProps) => {
+export const RaffleOverlay = ({
+  winners,
+  onClose,
+  showConfetti,
+  viewportWidth,
+  viewportHeight,
+}: RaffleOverlayProps) => {
   if (winners.length === 0) {
     return null;
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 px-4 backdrop-blur">
-      <div className="w-full max-w-lg space-y-5 rounded-3xl border border-brand-500/40 bg-slate-900/95 p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+      <div className="absolute inset-0 -z-10 bg-slate-950/85 backdrop-blur" />
+
+      {showConfetti && viewportWidth > 0 && viewportHeight > 0 ? (
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <Confetti
+            width={viewportWidth}
+            height={viewportHeight}
+            numberOfPieces={420}
+            recycle={false}
+            gravity={0.2}
+            style={{ pointerEvents: 'none' }}
+          />
+        </div>
+      ) : null}
+
+      <div className="relative z-10 w-full max-w-lg space-y-5 rounded-3xl border border-brand-500/40 bg-slate-900/95 p-6 shadow-2xl">
         <header className="space-y-2 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-brand-200">Celebramos a</p>
           <h2 className="text-3xl font-bold text-white">
