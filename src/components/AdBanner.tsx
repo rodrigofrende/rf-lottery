@@ -54,25 +54,22 @@ export const AdBanner = ({ adSlot, className, height = 250 }: AdBannerProps) => 
     return undefined;
   }, [isConfigured]);
 
+  const containerClasses = ['overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 p-2', className]
+    .filter(Boolean)
+    .join(' ');
+
   if (!isConfigured) {
     return (
-      <div
-        className={['rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 p-4 text-center text-xs text-slate-500', className]
-          .filter(Boolean)
-          .join(' ')}
-      >
-        Configurá tu identificador de AdSense (variable VITE_ADSENSE_CLIENT_ID) para activar este espacio publicitario.
+      <div className={containerClasses} style={{ minHeight: height + 16 }}>
+        <div className="flex h-full w-full items-center justify-center text-xs text-slate-500">
+          Próximamente verás contenido relevante para tu comunidad aquí.
+        </div>
       </div>
     );
   }
 
   return (
-    <div
-      className={['overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 p-2', className]
-        .filter(Boolean)
-        .join(' ')}
-      style={{ minHeight: height + 16 }}
-    >
+    <div className={containerClasses} style={{ minHeight: height + 16 }}>
       <ins
         className="adsbygoogle block h-full w-full"
         style={{ display: 'block', width: '100%', height }}
