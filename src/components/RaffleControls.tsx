@@ -21,11 +21,11 @@ export const RaffleControls = ({
     <div className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
       <div className="flex flex-wrap items-center gap-4">
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">Personas en la lista</p>
+          <p className="text-xs uppercase tracking-wide text-slate-500">Personas cargadas</p>
           <p className="text-lg font-semibold text-white">{participantCount}</p>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">Chances totales</p>
+          <p className="text-xs uppercase tracking-wide text-slate-500">Total de chances</p>
           <p className="text-lg font-semibold text-white">{totalChances}</p>
         </div>
       </div>
@@ -33,7 +33,7 @@ export const RaffleControls = ({
       <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
         <div className="space-y-2">
           <label htmlFor="winners-count" className="text-sm font-medium text-slate-200">
-            ¿A cuántas personas premiamos?
+            ¿Cuántos ganadores querés sortear?
           </label>
           <input
             id="winners-count"
@@ -60,7 +60,7 @@ export const RaffleControls = ({
         </button>
 
         <p className="text-xs text-slate-500 sm:col-span-2">
-          Respetamos las chances de cada persona y nunca repetimos ganador.
+          Respetamos las probabilidades asignadas a cada participante y nunca repetimos ganador.
         </p>
       </div>
     </div>

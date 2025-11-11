@@ -39,12 +39,12 @@ export const RaffleOverlay = ({
 
       <div className="relative z-10 w-full max-w-lg space-y-5 rounded-3xl border border-brand-500/40 bg-slate-900/95 p-6 shadow-2xl">
         <header className="space-y-2 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-brand-200">Celebramos a</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-brand-200">Ganadores</p>
           <h2 className="text-3xl font-bold text-white">
-            🎉 ¡{winners.length} ganador{winners.length > 1 ? 'es' : ''} recién salid{winners.length > 1 ? 'os' : 'o'}!
+            🎉 {winners.length} ganador{winners.length > 1 ? 'es' : ''} del sorteo
           </h2>
           <p className="text-sm text-slate-400">
-            Mostralos en vivo, tirales un gracias y seguí metiendo energía a la comunidad.
+            Compartí los nombres en vivo, agradecé la participación y seguí con la dinámica.
           </p>
         </header>
 

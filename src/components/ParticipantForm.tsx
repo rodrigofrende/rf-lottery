@@ -46,15 +46,15 @@ export const ParticipantForm = ({
     const nextErrors: typeof errors = {};
 
     if (!form.name.trim()) {
-      nextErrors.name = 'Necesitamos el nombre.';
+      nextErrors.name = 'Ingresá un nombre.';
     }
 
     const trimmedContact = form.contact.trim();
 
     if (!trimmedContact) {
-      nextErrors.contact = 'Pasá un usuario o mail.';
+      nextErrors.contact = 'Ingresá un usuario o email.';
     } else if (trimmedContact.includes('@') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedContact)) {
-      nextErrors.contact = 'Ese mail no parece válido.';
+      nextErrors.contact = 'Revisá el formato del email.';
     }
 
     if (!nextErrors.contact) {
@@ -66,12 +66,12 @@ export const ParticipantForm = ({
       );
 
       if (exists) {
-        nextErrors.contact = 'Ese contacto ya está en la lista.';
+        nextErrors.contact = 'Ese contacto ya está cargado.';
       }
     }
 
     if (!Number.isFinite(form.chances) || form.chances < 1) {
-      nextErrors.chances = 'Poné al menos una chance.';
+      nextErrors.chances = 'Asigná al menos una chance.';
     }
 
     setErrors(nextErrors);
@@ -103,12 +103,12 @@ export const ParticipantForm = ({
     >
       <div className="space-y-2">
         <label htmlFor="participant-name" className="text-sm font-medium text-slate-200">
-          Nombre de la persona
+          Nombre del participante
         </label>
         <input
           id="participant-name"
           type="text"
-          placeholder={showPlaceholders ? 'Ej. Sofi Martínez' : undefined}
+          placeholder={showPlaceholders ? 'Ej. Sofía Martínez' : undefined}
           value={form.name}
           onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
           className="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-2 text-base text-slate-100 placeholder:text-slate-500"
@@ -118,12 +118,12 @@ export const ParticipantForm = ({
 
       <div className="space-y-2">
         <label htmlFor="participant-contact" className="text-sm font-medium text-slate-200">
-          Contacto (usuario o mail)
+          Contacto (usuario o email)
         </label>
         <input
           id="participant-contact"
           type="text"
-          placeholder={showPlaceholders ? 'Ej. sofia@email.com · @sofi' : undefined}
+          placeholder={showPlaceholders ? 'Ej. sofia@email.com · @SofiMartinez' : undefined}
           value={form.contact}
           onChange={(event) => setForm((prev) => ({ ...prev, contact: event.target.value }))}
           className="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-2 text-base text-slate-100 placeholder:text-slate-500"
@@ -134,7 +134,7 @@ export const ParticipantForm = ({
       <div className="grid grid-cols-2 items-end gap-3">
         <div className="space-y-2">
           <label htmlFor="participant-chances" className="text-sm font-medium text-slate-200">
-            Chances
+            Chances asignadas
           </label>
           <input
             id="participant-chances"
@@ -159,7 +159,7 @@ export const ParticipantForm = ({
           type="submit"
           className="h-11 cursor-pointer rounded-xl bg-primary-500 text-sm font-semibold text-white transition hover:bg-primary-400 active:scale-[0.98]"
         >
-          {mode === 'create' ? 'Agregar a la lista' : 'Guardar'}
+          {mode === 'create' ? 'Sumar participante' : 'Guardar cambios'}
         </button>
       </div>
 

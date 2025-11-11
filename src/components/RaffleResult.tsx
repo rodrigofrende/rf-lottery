@@ -10,7 +10,7 @@ export const RaffleResult = ({ winners, onReset, lastUpdatedAt }: RaffleResultPr
   if (winners.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/40 p-6 text-center text-sm text-slate-400">
-        Todavía no hay ganadores. Dale al sorteo y festejamos acá mismo ✨
+        Todavía no hay ganadores. Ejecutá un sorteo para ver los resultados acá mismo ✨
       </div>
     );
   }
@@ -18,13 +18,13 @@ export const RaffleResult = ({ winners, onReset, lastUpdatedAt }: RaffleResultPr
   return (
     <div className="space-y-4 rounded-3xl border border-brand-500/40 bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-slate-900/40 p-5 shadow-soft">
       <div className="flex flex-col gap-2">
-        <p className="text-xs uppercase tracking-wide text-brand-200">Ganadores de esta vuelta</p>
+        <p className="text-xs uppercase tracking-wide text-brand-200">Ganadores del sorteo</p>
         <h2 className="text-2xl font-bold text-white">
-          🎉 {winners.length} ganador{winners.length > 1 ? 'es listos' : ' listo'}
+          🎉 {winners.length} ganador{winners.length > 1 ? 'es confirmados' : ' confirmado'}
         </h2>
         {lastUpdatedAt ? (
           <p className="text-xs text-slate-400">
-            Sorteo corriendo el {lastUpdatedAt.toLocaleDateString()} a las {lastUpdatedAt.toLocaleTimeString()}
+            Sorteo realizado el {lastUpdatedAt.toLocaleDateString()} a las {lastUpdatedAt.toLocaleTimeString()}
           </p>
         ) : null}
       </div>
@@ -48,7 +48,7 @@ export const RaffleResult = ({ winners, onReset, lastUpdatedAt }: RaffleResultPr
         onClick={onReset}
         className="w-full cursor-pointer rounded-xl border border-transparent bg-slate-800/80 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-800 hover:text-white active:scale-[0.98]"
       >
-        Volver a empezar
+        Reiniciar resultados
       </button>
     </div>
   );
