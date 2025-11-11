@@ -28,6 +28,7 @@ export const ParticipantForm = ({
 }: ParticipantFormProps) => {
   const [form, setForm] = useState<ParticipantDraft>(defaultDraft);
   const [errors, setErrors] = useState<{ name?: string; contact?: string; chances?: string }>({});
+  const showPlaceholders = mode === 'create' && existingParticipants.length === 0;
 
   useEffect(() => {
     if (initialParticipant) {
@@ -45,15 +46,15 @@ export const ParticipantForm = ({
     const nextErrors: typeof errors = {};
 
     if (!form.name.trim()) {
-      nextErrors.name = 'Ingresá el nombre del participante.';
+      nextErrors.name = 'Necesitamos el nombre.';
     }
 
     const trimmedContact = form.contact.trim();
 
     if (!trimmedContact) {
-      nextErrors.contact = 'Compartí el usuario o email de contacto.';
+      nextErrors.contact = 'Pasá un usuario o mail.';
     } else if (trimmedContact.includes('@') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedContact)) {
-      nextErrors.contact = 'Revisá el formato del email.';
+      nextErrors.contact = 'Ese mail no parece válido.';
     }
 
     if (!nextErrors.contact) {
@@ -65,12 +66,12 @@ export const ParticipantForm = ({
       );
 
       if (exists) {
-        nextErrors.contact = 'Este usuario o email ya está participando.';
+        nextErrors.contact = 'Ese contacto ya está en la lista.';
       }
     }
 
     if (!Number.isFinite(form.chances) || form.chances < 1) {
-      nextErrors.chances = 'Asigná al menos una chance.';
+      nextErrors.chances = 'Poné al menos una chance.';
     }
 
     setErrors(nextErrors);
@@ -102,12 +103,12 @@ export const ParticipantForm = ({
     >
       <div className="space-y-2">
         <label htmlFor="participant-name" className="text-sm font-medium text-slate-200">
-          Nombre del participante
+          Nombre de la persona
         </label>
         <input
           id="participant-name"
           type="text"
-          placeholder="Ej. Sofía Martínez"
+          placeholder={showPlaceholders ? 'Ej. Sofi Martínez' : undefined}
           value={form.name}
           onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
           className="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-2 text-base text-slate-100 placeholder:text-slate-500"
@@ -117,12 +118,12 @@ export const ParticipantForm = ({
 
       <div className="space-y-2">
         <label htmlFor="participant-contact" className="text-sm font-medium text-slate-200">
-          Usuario o email de contacto
+          Contacto (usuario o mail)
         </label>
         <input
           id="participant-contact"
           type="text"
-          placeholder="Ej. sofia@email.com · @SofiMartinez"
+          placeholder={showPlaceholders ? 'Ej. sofia@email.com · @sofi' : undefined}
           value={form.contact}
           onChange={(event) => setForm((prev) => ({ ...prev, contact: event.target.value }))}
           className="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-2 text-base text-slate-100 placeholder:text-slate-500"
@@ -133,7 +134,7 @@ export const ParticipantForm = ({
       <div className="grid grid-cols-2 items-end gap-3">
         <div className="space-y-2">
           <label htmlFor="participant-chances" className="text-sm font-medium text-slate-200">
-            Chances asignadas
+            Chances
           </label>
           <input
             id="participant-chances"
@@ -141,6 +142,7 @@ export const ParticipantForm = ({
             min={1}
             step={1}
             inputMode="numeric"
+            placeholder={showPlaceholders ? '1' : undefined}
             value={form.chances}
             onChange={(event) =>
               setForm((prev) => ({
@@ -157,7 +159,7 @@ export const ParticipantForm = ({
           type="submit"
           className="h-11 cursor-pointer rounded-xl bg-primary-500 text-sm font-semibold text-white transition hover:bg-primary-400 active:scale-[0.98]"
         >
-          {mode === 'create' ? 'Sumar participante' : 'Guardar cambios'}
+          {mode === 'create' ? 'Agregar a la lista' : 'Guardar'}
         </button>
       </div>
 

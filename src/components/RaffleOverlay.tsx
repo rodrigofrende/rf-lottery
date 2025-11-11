@@ -41,10 +41,10 @@ export const RaffleOverlay = ({
         <header className="space-y-2 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-brand-200">Celebramos a</p>
           <h2 className="text-3xl font-bold text-white">
-            🎉 ¡{winners.length} ganador{winners.length > 1 ? 'es' : ''} al instante!
+            🎉 ¡{winners.length} ganador{winners.length > 1 ? 'es' : ''} recién salid{winners.length > 1 ? 'os' : 'o'}!
           </h2>
           <p className="text-sm text-slate-400">
-            Mostralos en vivo, agradeceles y seguí sorprendiendo a tu comunidad.
+            Mostralos en vivo, tirales un gracias y seguí metiendo energía a la comunidad.
           </p>
         </header>
 
@@ -52,17 +52,12 @@ export const RaffleOverlay = ({
           {winners.map((winner, index) => (
             <li
               key={winner.id}
-              className="flex items-center justify-between rounded-2xl border border-brand-500/25 bg-slate-950/70 px-4 py-3"
+              className="rounded-2xl border border-brand-500/25 bg-slate-950/70 px-4 py-3"
             >
-              <div>
-                <p className="text-sm font-semibold text-white">
-                  #{index + 1} {winner.name}
-                </p>
-                <p className="text-xs text-slate-400">{winner.contact}</p>
-              </div>
-              <span className="text-xs font-semibold text-brand-200">
-                {winner.chances} chance{winner.chances > 1 ? 's' : ''}
-              </span>
+              <p className="text-sm font-semibold text-white">
+                #{index + 1} {winner.name}
+              </p>
+              <p className="text-xs text-slate-400">{winner.contact}</p>
             </li>
           ))}
         </ul>

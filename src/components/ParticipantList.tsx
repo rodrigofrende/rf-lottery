@@ -18,7 +18,7 @@ export const ParticipantList = ({
   if (participants.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/50 p-6 text-center text-sm text-slate-400">
-        Sumá tu primer participante para ver la lista viva del sorteo 👇
+        Sumá a la primera persona y empezá a armar el hype del sorteo 👇
       </div>
     );
   }
@@ -26,13 +26,13 @@ export const ParticipantList = ({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-sm font-semibold text-slate-200">Participantes listos para el sorteo</p>
+        <p className="text-sm font-semibold text-slate-200">Lista caliente para sortear</p>
         <button
           type="button"
           onClick={onClearAll}
           className="cursor-pointer rounded-lg border border-transparent bg-primary-600/90 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-primary-500 active:scale-[0.97]"
         >
-          Limpiar lista
+          Vaciar lista
         </button>
       </div>
 
@@ -69,7 +69,7 @@ export const ParticipantList = ({
                 onClick={() => onDelete(participant.id)}
                 className="cursor-pointer rounded-lg border border-transparent bg-rose-500/10 px-3 py-1.5 text-xs font-semibold text-rose-300 transition hover:bg-rose-500/20 active:scale-[0.97]"
               >
-                Quitar
+                Sacar
               </button>
             </div>
           </li>

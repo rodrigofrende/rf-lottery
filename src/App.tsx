@@ -208,12 +208,11 @@ const App = () => {
             RF Lottery
           </span>
           <h1 className="text-3xl font-bold text-white sm:text-4xl">
-            Sorteos instantáneos para tu comunidad
+            Armá sorteos al toque con tu comunidad
           </h1>
           <p className="max-w-2xl text-sm text-slate-300 sm:text-base">
-            Gestioná participantes, asigná chances y anunciá ganadores en segundos. Diseñado para
-            streams, activaciones de marca y equipos que necesitan dinamizar sus giveaways sin
-            complicaciones.
+            Sumá gente, repartí chances y largá ganadores en segundos. Ideal para streams, activaciones
+            relámpago y cualquier giveaway donde quieras sumar energía sin fumar planillas.
           </p>
         </header>
 
