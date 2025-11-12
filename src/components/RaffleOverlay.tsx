@@ -57,7 +57,9 @@ export const RaffleOverlay = ({
               <p className="text-sm font-semibold text-white">
                 #{index + 1} {winner.name}
               </p>
-              <p className="text-xs text-slate-400">{winner.contact}</p>
+              {winner.contact.trim() && winner.contact.trim() !== winner.name.trim() ? (
+                <p className="text-xs text-slate-400">{winner.contact}</p>
+              ) : null}
             </li>
           ))}
         </ul>

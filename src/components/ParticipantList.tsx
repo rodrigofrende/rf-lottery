@@ -49,7 +49,9 @@ export const ParticipantList = ({
                   {participant.chances} chance{participant.chances > 1 ? 's' : ''}
                 </span>
               </div>
-              <p className="text-sm text-slate-400">{participant.contact}</p>
+              {participant.contact.trim() && participant.contact.trim() !== participant.name.trim() ? (
+                <p className="text-sm text-slate-400">{participant.contact}</p>
+              ) : null}
               {editingId === participant.id ? (
                 <p className="text-xs font-medium uppercase tracking-wide text-brand-300">
                   Editando...

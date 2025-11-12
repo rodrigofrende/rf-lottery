@@ -27,14 +27,17 @@ export const ParticipantForm = ({
   editingParticipantId,
 }: ParticipantFormProps) => {
   const [form, setForm] = useState<ParticipantDraft>(defaultDraft);
-  const [errors, setErrors] = useState<{ name?: string; contact?: string; chances?: string }>({});
+  const [errors, setErrors] = useState<{ identifier?: string }>({});
   const showPlaceholders = mode === 'create' && existingParticipants.length === 0;
 
   useEffect(() => {
     if (initialParticipant) {
+      const identifier = initialParticipant.contact?.trim()
+        ? initialParticipant.contact
+        : initialParticipant.name;
       setForm({
-        name: initialParticipant.name,
-        contact: initialParticipant.contact,
+        name: identifier,
+        contact: initialParticipant.contact || identifier,
         chances: initialParticipant.chances,
       });
     } else {
@@ -45,33 +48,29 @@ export const ParticipantForm = ({
   const validate = () => {
     const nextErrors: typeof errors = {};
 
-    if (!form.name.trim()) {
-      nextErrors.name = 'Ingresá un nombre.';
-    }
+    const trimmedValue = form.name.trim();
 
-    const trimmedContact = form.contact.trim();
-
-    if (!trimmedContact) {
-      nextErrors.contact = 'Ingresá un usuario o email.';
-    } else if (trimmedContact.includes('@') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedContact)) {
-      nextErrors.contact = 'Revisá el formato del email.';
-    }
-
-    if (!nextErrors.contact) {
-      const normalizedContact = trimmedContact.toLowerCase();
-      const exists = existingParticipants.some(
-        (participant) =>
+    if (!trimmedValue) {
+      nextErrors.identifier = 'Ingresá un nombre o email.';
+    } else if (
+      trimmedValue.includes('@') &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)
+    ) {
+      nextErrors.identifier = 'Revisá el formato del email.';
+    } else {
+      const normalizedValue = trimmedValue.toLowerCase();
+      const exists = existingParticipants.some((participant) => {
+        const participantName = participant.name.trim().toLowerCase();
+        const participantContact = participant.contact.trim().toLowerCase();
+        return (
           participant.id !== editingParticipantId &&
-          participant.contact.trim().toLowerCase() === normalizedContact,
-      );
+          (participantName === normalizedValue || participantContact === normalizedValue)
+        );
+      });
 
       if (exists) {
-        nextErrors.contact = 'Ese contacto ya está cargado.';
+        nextErrors.identifier = 'Ese participante ya está cargado.';
       }
-    }
-
-    if (!Number.isFinite(form.chances) || form.chances < 1) {
-      nextErrors.chances = 'Asigná al menos una chance.';
     }
 
     setErrors(nextErrors);
@@ -85,9 +84,10 @@ export const ParticipantForm = ({
       return;
     }
 
+    const trimmedValue = form.name.trim();
     onSubmit({
-      name: form.name.trim(),
-      contact: form.contact.trim(),
+      name: trimmedValue,
+      contact: trimmedValue,
       chances: Math.floor(form.chances),
     });
 
@@ -102,65 +102,36 @@ export const ParticipantForm = ({
       className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-4 shadow-soft backdrop-blur"
     >
       <div className="space-y-2">
-        <label htmlFor="participant-name" className="text-sm font-medium text-slate-200">
-          Nombre del participante
+        <label htmlFor="participant-identifier" className="text-sm font-medium text-slate-200">
+          Nombre o email del participante
         </label>
-        <input
-          id="participant-name"
-          type="text"
-          placeholder={showPlaceholders ? 'Ej. Sofía Martínez' : undefined}
-          value={form.name}
-          onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-          className="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-2 text-base text-slate-100 placeholder:text-slate-500"
-        />
-        {errors.name ? <p className="text-sm text-rose-400">{errors.name}</p> : null}
-      </div>
-
-      <div className="space-y-2">
-        <label htmlFor="participant-contact" className="text-sm font-medium text-slate-200">
-          Contacto (usuario o email)
-        </label>
-        <input
-          id="participant-contact"
-          type="text"
-          placeholder={showPlaceholders ? 'Ej. sofia@email.com · @SofiMartinez' : undefined}
-          value={form.contact}
-          onChange={(event) => setForm((prev) => ({ ...prev, contact: event.target.value }))}
-          className="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-2 text-base text-slate-100 placeholder:text-slate-500"
-        />
-        {errors.contact ? <p className="text-sm text-rose-400">{errors.contact}</p> : null}
-      </div>
-
-      <div className="grid grid-cols-2 items-end gap-3">
-        <div className="space-y-2">
-          <label htmlFor="participant-chances" className="text-sm font-medium text-slate-200">
-            Chances asignadas
-          </label>
-          <input
-            id="participant-chances"
-            type="number"
-            min={1}
-            step={1}
-            inputMode="numeric"
-            placeholder={showPlaceholders ? '1' : undefined}
-            value={form.chances}
-            onChange={(event) =>
-              setForm((prev) => ({
-                ...prev,
-                chances: Number.parseInt(event.target.value, 10) || 1,
-              }))
-            }
-            className="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-2 text-base text-slate-100 placeholder:text-slate-500"
-          />
-          {errors.chances ? <p className="text-sm text-rose-400">{errors.chances}</p> : null}
+        <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+          <div className="space-y-2">
+            <input
+              id="participant-identifier"
+              type="text"
+              placeholder={
+                showPlaceholders ? 'Ej. Sofía Martínez · sofia@email.com · @SofiMartinez' : undefined
+              }
+              value={form.name}
+              onChange={(event) =>
+                setForm((prev) => ({
+                  ...prev,
+                  name: event.target.value,
+                  contact: event.target.value,
+                }))
+              }
+              className="h-11 w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 text-base text-slate-100 placeholder:text-slate-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="h-11 cursor-pointer rounded-xl bg-primary-500 px-6 text-sm font-semibold text-white transition hover:bg-primary-400 active:scale-[0.98]"
+          >
+            {mode === 'create' ? 'Sumar participante' : 'Guardar cambios'}
+          </button>
         </div>
-
-        <button
-          type="submit"
-          className="h-11 cursor-pointer rounded-xl bg-primary-500 text-sm font-semibold text-white transition hover:bg-primary-400 active:scale-[0.98]"
-        >
-          {mode === 'create' ? 'Sumar participante' : 'Guardar cambios'}
-        </button>
+        {errors.identifier ? <p className="text-sm text-rose-400">{errors.identifier}</p> : null}
       </div>
 
       {mode === 'edit' && onCancel ? (
